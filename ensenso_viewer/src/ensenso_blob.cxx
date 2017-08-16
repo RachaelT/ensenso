@@ -218,6 +218,17 @@ private:
     ROS_INFO_STREAM("saving image: " << imageName);
     cv::imwrite(imageName, image, params);
 
+    ROS_INFO_STREAM("saving Textfile:");
+
+    std::ofstream outputFile("outside_" + baseName + "_cloud.txt");
+
+    for (size_t i = 0; i < clloud.points.size (); ++i)
+      outputFile << "    " << clloud.points[i].x
+                << " "    << clloud.points[i].y
+                << " "    << clloud.points[i].z << std::endl;
+
+
+    outputFile.close();
     ROS_INFO_STREAM("saving complete!");
     ++counter;
     save = false;
@@ -408,10 +419,11 @@ private:
 
     //Clouds for storing pulled data
     PointCloudT contourCloud;
-    contourCloud.points.resize(1);
+  //  contourCloud.resize(cc);
 
     PointCloudT regionCloud;
-    regionCloud.points.resize(1);
+  //  regionCloud.resize(rc);
+
 
     for (size_t i = 0; i < data.size(); ++i){
       row++;
